@@ -1,70 +1,269 @@
-
+<!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre mim - Rubens Costa</title>
+    <title>Sobre — Rubens Costa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style/style.css">
+    <style>
+        .sobre-page { padding: 100px 8% 80px; max-width: 1200px; margin: 0 auto; }
+        .sobre-header {
+            margin-bottom: 64px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 40px;
+        }
+        .page-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .page-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+        .sobre-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            margin-bottom: 80px;
+        }
+        .sobre-bio p {
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        .sobre-bio p strong { color: var(--text-primary); font-weight: 500; }
+        .sobre-img-col { display: flex; flex-direction: column; gap: 24px; }
+        .img-wrapper {
+            width: 100%;
+            aspect-ratio: 4/5;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        .img-wrapper img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+        /* Timeline */
+        .secao-titulo {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+        }
+        .timeline { position: relative; padding-left: 24px; }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 8px; bottom: 8px;
+            width: 1px;
+            background: var(--border);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 28px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 8px;
+            width: 8px; height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0,212,255,0.5);
+        }
+        .timeline-periodo {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--accent);
+            letter-spacing: 0.05em;
+            margin-bottom: 6px;
+        }
+        .timeline-cargo {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .timeline-empresa {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+        .timeline-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-weight: 300;
+        }
+        /* Skills grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 80px;
+        }
+        .skill-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            transition: border-color 0.2s;
+        }
+        .skill-card:hover { border-color: rgba(0,212,255,0.4); }
+        .skill-category {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+        .skill-name {
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+        .skill-bar {
+            height: 3px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .skill-bar__fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), rgba(0,212,255,0.4));
+            border-radius: 2px;
+        }
+        @media (max-width: 900px) {
+            .sobre-grid { grid-template-columns: 1fr; gap: 40px; }
+            .sobre-img-col { max-width: 300px; margin: 0 auto; }
+        }
+    </style>
 </head>
-
 <body>
-    <!-- Cabeçalho da página com menu de navegação -->
     <header class="cabecalho">
+        <div class="cabecalho__logo"><span class="logo-prefix">rc</span><span class="logo-dot">.</span>dev</div>
         <nav class="cabecalho__menu">
-            <!-- Link para a página inicial -->
             <a class="cabecalho__menu__link" href="index.html">Home</a>
-            <!-- Link para a página "Sobre mim" -->
-            <a class="cabecalho__menu__link" href="about.html">Sobre mim</a>
+            <a class="cabecalho__menu__link active" href="about.html">Sobre</a>
+            <a class="cabecalho__menu__link" href="projects.html">Projetos</a>
         </nav>
     </header>
 
-    <!-- Conteúdo principal da página "Sobre mim" -->
-    <main class="apresentacao">
-        <!-- Seção de conteúdo textual -->
-        <section class="apresentacao__conteudo">
-            <h1 class="apresentacao__conteudo__titulo">Sobre Mim</h1>
+    <main class="sobre-page">
+        <div class="sobre-header">
+            <div class="page-label">// sobre_mim.md</div>
+            <h1 class="page-title">De dados operacionais<br>a decisões estratégicas</h1>
+        </div>
 
-            <!-- Seção: Minha Trajetória Profissional -->
-            <div class="apresentacao__secao">
-                <h2 class="apresentacao__secao__titulo">Minha Trajetória Profissional</h2>
-                <p class="apresentacao__conteudo__texto">Sou um profissional formado em Administração de Empresas e
-                    estou em constante busca por aprendizado e aprimoramento de minhas habilidades. Minha jornada
-                    profissional inclui formação em Power BI pela plataforma Alura, onde pude ampliar
-                    significativamente meus conhecimentos em análise de dados.</p>
+        <div class="sobre-grid">
+            <div class="sobre-bio">
+                <p>Sou <strong>Analista de Dados com 9 anos de experiência</strong> no Terminal de Granéis do Guarujá (TGG), onde transformo dados operacionais e financeiros em dashboards e relatórios que orientam decisões da gestão.</p>
+                <p>Minha atuação combina análise financeira — <strong>budgeting, forecasting e variance analysis</strong> — com Business Intelligence, construindo pipelines de dados e dashboards em Power BI e Excel Avançado que monitoram KPIs críticos do negócio.</p>
+                <p>Atualmente curso <strong>Ciência da Computação na UNIP</strong>, com foco em aprofundar minhas habilidades em SQL, Python (pandas), ETL e arquitetura de dados para atuar cada vez mais como Engenheiro de Dados.</p>
+                <p>Tenho certificações em <strong>Power BI, Tableau, Looker Studio e SAP</strong>, e busco oportunidades onde possa contribuir com projetos de dados de maior complexidade e impacto.</p>
             </div>
+            <div class="sobre-img-col">
+                <div class="img-wrapper">
+                    <img src="./assets/img.jpg" alt="Rubens Costa">
+                </div>
+            </div>
+        </div>
 
-            <!-- Seção: Estudos e Novas Habilidades -->
-            <div class="apresentacao__secao">
-                <h2 class="apresentacao__secao__titulo">Estudos e Novas Habilidades</h2>
-                <p class="apresentacao__conteudo__texto">Atualmente, estou estudando Ciências da Computação para
-                    expandir minhas oportunidades no mercado de tecnologia. Além disso, estou dedicando meu tempo ao
-                    estudo de Front-end também na Alura, buscando adquirir habilidades de programação web e
-                    desenvolvimento de interfaces para ampliar minhas possibilidades profissionais.</p>
+        <!-- Experiência -->
+        <h2 class="secao-titulo">Experiência</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-periodo">jan 2025 — presente</div>
+                <div class="timeline-cargo">Analista Administrativo Pleno</div>
+                <div class="timeline-empresa">TGG — Terminal de Granéis do Guarujá</div>
+                <div class="timeline-desc">Desenvolvimento de dashboards interativos em Power BI consolidando grandes bases de dados operacionais e financeiras. Controle financeiro da coordenação de operações: planejamento orçamentário, acompanhamento de forecast e análise de variações. Redução de 72h no tempo de geração de relatórios.</div>
             </div>
+            <div class="timeline-item">
+                <div class="timeline-periodo">fev 2021 — jan 2025</div>
+                <div class="timeline-cargo">Analista Administrativo Júnior</div>
+                <div class="timeline-empresa">TGG — Terminal de Granéis do Guarujá</div>
+                <div class="timeline-desc">Análise de custos e KPIs de embarque, dashboards semanais e mensais em Power BI, gestão de materiais e EPIs no SAP, acompanhamento de orçamento no Sysphera.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-periodo">out 2018 — fev 2021</div>
+                <div class="timeline-cargo">Auxiliar Administrativo</div>
+                <div class="timeline-empresa">TGG — Terminal de Granéis do Guarujá</div>
+                <div class="timeline-desc">Controle de embarque em Excel, elaboração de gráficos e relatórios mensais em PowerPoint, suporte a KPIs de embarque e desempenho operacional.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-periodo">out 2016 — set 2018</div>
+                <div class="timeline-cargo">Estagiário</div>
+                <div class="timeline-empresa">TGG — Terminal de Granéis do Guarujá</div>
+                <div class="timeline-desc">Apoio em processos OGMO, elaboração de planilhas de controle e apresentações de performance utilizando Excel e PowerPoint.</div>
+            </div>
+        </div>
 
-            <!-- Seção: Interesses e Paixões -->
-            <div class="apresentacao__secao">
-                <h2 class="apresentacao__secao__titulo">Interesses e Paixões</h2>
-                <p class="apresentacao__conteudo__texto">Sou apaixonado pela leitura, e atualmente estou
-                    explorando a obra "Gaia Ciência" de Nietzsche, o que demonstra minha apreciação pela filosofia e
-                    pelo pensamento crítico. Gosto de desfrutar de música, que vejo como uma forma de relaxamento e
-                    inspiração. Também valorizo a conexão com os animais e a natureza, e adoro sair com meu
-                    cachorro. No geral, sou uma pessoa empenhada em meu desenvolvimento pessoal e profissional, com
-                    interesses diversificados e uma abordagem equilibrada entre estudos, lazer e o cuidado com meu
-                    animal de estimação.</p>
+        <!-- Skills -->
+        <h2 class="secao-titulo" style="margin-top: 64px;">Stack Técnica</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-category">Linguagens</div>
+                <div class="skill-name">SQL</div>
+                <div class="skill-bar"><div class="skill-bar__fill" style="width:85%"></div></div>
             </div>
-        </section>
-        <!-- Imagem de perfil -->
-        <img class="apresentacao__imagem" src="./assets/img.jpg" alt="Foto de perfil de Rubens">
+            <div class="skill-card">
+                <div class="skill-category">Linguagens</div>
+                <div class="skill-name">Python (pandas)</div>
+                <div class="skill-bar"><div class="skill-bar__fill" style="width:65%"></div></div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-category">Visualização</div>
+                <div class="skill-name">Power BI</div>
+                <div class="skill-bar"><div class="skill-bar__fill" style="width:90%"></div></div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-category">Visualização</div>
+                <div class="skill-name">Tableau</div>
+                <div class="skill-bar"><div class="skill-bar__fill" style="width:70%"></div></div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-category">Visualização</div>
+                <div class="skill-name">Looker Studio</div>
+                <div class="skill-bar"><div class="skill-bar__fill" style="width:68%"></div></div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-category">Planilhas</div>
+                <div class="skill-name">Excel Avançado</div>
+                <div class="skill-bar"><div class="skill-bar__fill" style="width:92%"></div></div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-category">ERP</div>
+                <div class="skill-name">SAP</div>
+                <div class="skill-bar"><div class="skill-bar__fill" style="width:75%"></div></div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-category">Dados</div>
+                <div class="skill-name">ETL / Modelagem</div>
+                <div class="skill-bar"><div class="skill-bar__fill" style="width:60%"></div></div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-category">Finanças</div>
+                <div class="skill-name">Budgeting & Forecast</div>
+                <div class="skill-bar"><div class="skill-bar__fill" style="width:88%"></div></div>
+            </div>
+        </div>
     </main>
 
-    <!-- Rodapé da página -->
     <footer class="rodape">
-        <p>Desenvolvido por Rubens Costa</p>
+        <span class="rodape__mono">rubens.costa</span>
+        <span>© 2025 — Guarujá, SP</span>
     </footer>
 </body>
-
 </html>
-

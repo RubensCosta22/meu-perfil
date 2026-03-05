@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projetos — Rubens Costa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style/style.css">
+    <style>
+        .projects-page { padding: 100px 8% 80px; max-width: 1200px; margin: 0 auto; }
+        .page-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .page-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+        .page-subtitle {
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 560px;
+            line-height: 1.7;
+            font-weight: 300;
+            margin-bottom: 64px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--border);
+        }
+        /* Filter tabs */
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        .filter-tab {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            padding: 8px 16px;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+            background: transparent;
+            letter-spacing: 0.04em;
+        }
+        .filter-tab.active, .filter-tab:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(0,212,255,0.06);
+        }
+        /* Projects grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 24px;
+        }
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transition: border-color 0.2s, transform 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .project-card:hover {
+            border-color: rgba(0,212,255,0.35);
+            transform: translateY(-4px);
+        }
+        .project-card:hover::before { opacity: 1; }
+        .project-card--featured {
+            grid-column: span 2;
+            background: linear-gradient(135deg, rgba(0,212,255,0.04) 0%, transparent 60%);
+        }
+        .project-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .project-icon {
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+        .project-status {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            padding: 4px 10px;
+            border-radius: 100px;
+            letter-spacing: 0.05em;
+        }
+        .status-production {
+            background: rgba(0,255,128,0.08);
+            border: 1px solid rgba(0,255,128,0.2);
+            color: #00ff80;
+        }
+        .status-dev {
+            background: rgba(255,200,0,0.08);
+            border: 1px solid rgba(255,200,0,0.2);
+            color: #ffcc00;
+        }
+        .status-study {
+            background: rgba(0,212,255,0.08);
+            border: 1px solid rgba(0,212,255,0.2);
+            color: var(--accent);
+        }
+        .project-title {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+        .project-desc {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-weight: 300;
+        }
+        .project-metrics {
+            display: flex;
+            gap: 20px;
+        }
+        .metric {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .metric__value {
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            color: var(--accent);
+            font-weight: 700;
+        }
+        .metric__label {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .proj-tag {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            padding: 4px 8px;
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            color: var(--text-muted);
+        }
+        .project-footer {
+            display: flex;
+            gap: 12px;
+            margin-top: auto;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+        .proj-link {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            letter-spacing: 0.04em;
+            transition: color 0.2s;
+        }
+        .proj-link:hover { color: var(--accent); }
+        .proj-link--primary { color: var(--accent); }
+        /* WIP card */
+        .wip-card {
+            border: 1px dashed var(--border);
+            border-radius: 12px;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 12px;
+            min-height: 200px;
+        }
+        .wip-icon { font-size: 2rem; }
+        .wip-text {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        @media (max-width: 900px) {
+            .project-card--featured { grid-column: span 1; }
+            .projects-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="cabecalho">
+        <div class="cabecalho__logo"><span class="logo-prefix">rc</span><span class="logo-dot">.</span>dev</div>
+        <nav class="cabecalho__menu">
+            <a class="cabecalho__menu__link" href="index.html">Home</a>
+            <a class="cabecalho__menu__link" href="about.html">Sobre</a>
+            <a class="cabecalho__menu__link active" href="projects.html">Projetos</a>
+        </nav>
+    </header>
+
+    <main class="projects-page">
+        <div class="page-label">// projetos.json</div>
+        <h1 class="page-title">Projetos & Cases</h1>
+        <p class="page-subtitle">
+            Projetos desenvolvidos em produção, estudos aplicados e automações.
+            Foco em dados, BI e engenharia de dados.
+        </p>
+
+        <div class="filter-tabs">
+            <button class="filter-tab active">Todos</button>
+            <button class="filter-tab">Power BI</button>
+            <button class="filter-tab">SQL / Python</button>
+            <button class="filter-tab">Financeiro</button>
+        </div>
+
+        <div class="projects-grid">
+
+            <!-- Featured Project -->
+            <div class="project-card project-card--featured">
+                <div class="project-header">
+                    <div class="project-icon">📊</div>
+                    <span class="project-status status-production">em produção</span>
+                </div>
+                <div class="project-title">Dashboard Operacional — TGG</div>
+                <div class="project-desc">
+                    Dashboard interativo em Power BI consolidando dados operacionais e financeiros do terminal portuário.
+                    Monitora 8 KPIs críticos incluindo volume embarcado, performance de autos/vagões, custos e indicadores OGMO.
+                    Integra dados de múltiplas fontes (SAP, Sysphera, Log One) com atualização automática.
+                </div>
+                <div class="project-metrics">
+                    <div class="metric">
+                        <span class="metric__value">72h</span>
+                        <span class="metric__label">Redução em relatórios</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric__value">8</span>
+                        <span class="metric__label">KPIs monitorados</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric__value">3+</span>
+                        <span class="metric__label">Fontes integradas</span>
+                    </div>
+                </div>
+                <div class="project-tags">
+                    <span class="proj-tag">Power BI</span>
+                    <span class="proj-tag">DAX</span>
+                    <span class="proj-tag">Excel</span>
+                    <span class="proj-tag">SAP</span>
+                    <span class="proj-tag">KPI Analysis</span>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-icon">💰</div>
+                    <span class="project-status status-production">em produção</span>
+                </div>
+                <div class="project-title">Controle Financeiro & Budget</div>
+                <div class="project-desc">
+                    Modelo financeiro em Excel Avançado para planejamento orçamentário, tracking de forecast e análise de variações (variance analysis) da coordenação de operações do TGG.
+                </div>
+                <div class="project-tags">
+                    <span class="proj-tag">Excel Avançado</span>
+                    <span class="proj-tag">Budgeting</span>
+                    <span class="proj-tag">Forecasting</span>
+                    <span class="proj-tag">Variance Analysis</span>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-icon">🚢</div>
+                    <span class="project-status status-production">em produção</span>
+                </div>
+                <div class="project-title">Relatórios de Embarque</div>
+                <div class="project-desc">
+                    Automação de boletins semanais e mensais de performance de embarque. Consolida taxa de ocupação, volume por produto (farelo, soja, milho), tempo de espera e economia de rechego.
+                </div>
+                <div class="project-tags">
+                    <span class="proj-tag">Power BI</span>
+                    <span class="proj-tag">Excel</span>
+                    <span class="proj-tag">Log One</span>
+                    <span class="proj-tag">PowerPoint</span>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-icon">🐍</div>
+                    <span class="project-status status-dev">em desenvolvimento</span>
+                </div>
+                <div class="project-title">Pipeline ETL com Python</div>
+                <div class="project-desc">
+                    Estudo aplicado de pipeline de dados usando Python (pandas) e SQL. Extração, transformação e carga de dados operacionais para análise automatizada. Projeto em desenvolvimento como parte da formação em Ciência da Computação.
+                </div>
+                <div class="project-tags">
+                    <span class="proj-tag">Python</span>
+                    <span class="proj-tag">pandas</span>
+                    <span class="proj-tag">SQL</span>
+                    <span class="proj-tag">ETL</span>
+                </div>
+                <div class="project-footer">
+                    <a class="proj-link proj-link--primary" href="https://github.com/RubensCosta22" target="_blank">→ GitHub</a>
+                </div>
+            </div>
+
+            <!-- Project 5 -->
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-icon">📈</div>
+                    <span class="project-status status-study">estudo</span>
+                </div>
+                <div class="project-title">Dashboard com Tableau</div>
+                <div class="project-desc">
+                    Projeto de estudo explorando as capacidades do Tableau para visualização de dados. Baseado na certificação "Dashboard com Tableau: conceitos essenciais" — análise de datasets públicos com foco em storytelling.
+                </div>
+                <div class="project-tags">
+                    <span class="proj-tag">Tableau</span>
+                    <span class="proj-tag">Data Viz</span>
+                    <span class="proj-tag">Storytelling</span>
+                </div>
+            </div>
+
+            <!-- WIP Slot -->
+            <div class="wip-card">
+                <div class="wip-icon">⚙️</div>
+                <div class="wip-text">
+                    Novos projetos a caminho.<br>
+                    Acompanhe pelo GitHub.
+                </div>
+                <a class="proj-link proj-link--primary" href="https://github.com/RubensCosta22" target="_blank" style="margin-top:8px;">→ github.com/RubensCosta22</a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="rodape">
+        <span class="rodape__mono">rubens.costa</span>
+        <span>© 2025 — Guarujá, SP</span>
+    </footer>
+</body>
+</html>

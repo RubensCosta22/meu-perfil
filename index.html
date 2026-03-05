@@ -1,65 +1,289 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfólio - Rubens Costa</title>
+    <title>Rubens Costa — Engenharia de Dados & BI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style/style.css">
+    <style>
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 0;
+            padding: 0 8%;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            right: -100px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero__text {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            z-index: 1;
+        }
+        .hero__badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 212, 255, 0.08);
+            border: 1px solid rgba(0, 212, 255, 0.25);
+            border-radius: 100px;
+            padding: 6px 16px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent);
+            width: fit-content;
+            letter-spacing: 0.05em;
+        }
+        .hero__badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+        }
+        .hero__titulo {
+            font-family: var(--font-display);
+            font-size: clamp(2.8rem, 5vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+        }
+        .hero__titulo .linha-destaque {
+            display: block;
+            color: var(--accent);
+            font-size: clamp(1.6rem, 3vw, 2.8rem);
+            font-weight: 700;
+            margin-top: 4px;
+        }
+        .hero__subtitulo {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            max-width: 480px;
+            font-weight: 300;
+        }
+        .hero__stats {
+            display: flex;
+            gap: 40px;
+            padding: 24px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .stat { display: flex; flex-direction: column; gap: 2px; }
+        .stat__numero {
+            font-family: var(--font-mono);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .stat__label {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .hero__ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+        .btn-primary {
+            background: var(--accent);
+            color: #000;
+            padding: 13px 28px;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.83rem;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover { background: #fff; transform: translateY(-2px); }
+        .btn-outline {
+            border: 1px solid var(--border-light);
+            color: var(--text-primary);
+            padding: 13px 28px;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.83rem;
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: all 0.2s;
+        }
+        .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+        .hero__visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .perfil-card { position: relative; width: 320px; }
+        .perfil-card__img-wrapper {
+            width: 320px;
+            height: 380px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+        .perfil-card__img-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 55%;
+            background: linear-gradient(transparent, rgba(10,10,10,0.85));
+        }
+        .perfil-card__img-wrapper img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            object-position: top center;
+        }
+        .perfil-card__info {
+            position: absolute;
+            bottom: 20px; left: 20px; right: 20px;
+            z-index: 2;
+        }
+        .perfil-card__nome {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .perfil-card__cargo {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--accent);
+            margin-top: 3px;
+        }
+        .tech-stack { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tech-tag {
+            background: rgba(0,212,255,0.06);
+            border: 1px solid rgba(0,212,255,0.18);
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .tech-tag:hover { border-color: var(--accent); color: var(--accent); }
+        .social-links { display: flex; gap: 12px; }
+        .social-link {
+            width: 42px; height: 42px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .social-link:hover {
+            border-color: var(--accent);
+            background: rgba(0,212,255,0.08);
+            transform: translateY(-2px);
+        }
+        .social-link img { width: 20px; height: 20px; filter: brightness(0) invert(0.65); }
+        .social-link:hover img { filter: brightness(0) saturate(100%) invert(70%) sepia(62%) saturate(400%) hue-rotate(155deg); }
+        @media (max-width: 900px) {
+            .hero { grid-template-columns: 1fr; padding: 10% 6%; padding-top: 100px; gap: 48px; }
+            .hero__visual { order: -1; }
+            .perfil-card { width: 250px; }
+            .perfil-card__img-wrapper { width: 250px; height: 290px; }
+            .hero__stats { gap: 20px; }
+        }
+    </style>
 </head>
-
 <body>
-    <!-- Cabeçalho da página com menu de navegação -->
     <header class="cabecalho">
+        <div class="cabecalho__logo"><span class="logo-prefix">rc</span><span class="logo-dot">.</span>dev</div>
         <nav class="cabecalho__menu">
-            <!-- Link para a página inicial -->
-            <a class="cabecalho__menu__link" href="index.html">Home</a>
-            <!-- Link para a página "Sobre mim" -->
-            <a class="cabecalho__menu__link" href="about.html">Sobre mim</a>
+            <a class="cabecalho__menu__link active" href="index.html">Home</a>
+            <a class="cabecalho__menu__link" href="about.html">Sobre</a>
+            <a class="cabecalho__menu__link" href="projects.html">Projetos</a>
         </nav>
     </header>
 
-    <!-- Conteúdo principal da página -->
-    <main class="apresentacao">
-        <!-- Seção de conteúdo principal -->
-        <section class="apresentacao__conteudo">
-            <!-- Título principal com destaque -->
-            <h1 class="apresentacao__conteudo__titulo">Eleve seu negócio digital a outro nível<strong
-                    class="titulo-destaque"> com um Front-end de qualidade!
-                </strong></h1>
-            <!-- Parágrafo de introdução -->
-            <p class="apresentacao__conteudo__texto">Olá! Sou Rubens Costa, estudante de Ciências da Computação na
-                Unip. Atualmente, estou aprendendo Python, HTML e CSS. Estou empenhado em meu desenvolvimento pessoal e
-                profissional. Vamos conversar?</p>
-            <!-- Seção de links para redes sociais -->
-            <div class="apresentacao__links">
-                <h2 class="apresentacao__links__subtitulo">Acesse minhas redes: </h2>
-                <!-- Link para o GitHub -->
-                <a class="apresentacao__links__navegacao" href="https://github.com/RubensCosta22" target="_blank" rel="noopener noreferrer">
-                    <img src="./assets/github.png" alt="Ícone do GitHub">
-                    GitHub
+    <main class="hero">
+        <section class="hero__text">
+            <div class="hero__badge">Disponível para novas oportunidades</div>
+            <h1 class="hero__titulo">
+                Rubens Costa
+                <span class="linha-destaque">Engenharia de Dados & BI</span>
+            </h1>
+            <p class="hero__subtitulo">
+                Analista com 9 anos de experiência transformando dados operacionais e financeiros em insights estratégicos.
+                Especialista em pipelines de dados, dashboards e planejamento financeiro.
+            </p>
+            <div class="hero__stats">
+                <div class="stat">
+                    <span class="stat__numero">9+</span>
+                    <span class="stat__label">Anos de exp.</span>
+                </div>
+                <div class="stat">
+                    <span class="stat__numero">8</span>
+                    <span class="stat__label">KPIs monitorados</span>
+                </div>
+                <div class="stat">
+                    <span class="stat__numero">72h</span>
+                    <span class="stat__label">Redução em relatórios</span>
+                </div>
+            </div>
+            <div class="tech-stack">
+                <span class="tech-tag">SQL</span>
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">Power BI</span>
+                <span class="tech-tag">ETL</span>
+                <span class="tech-tag">Excel Avançado</span>
+                <span class="tech-tag">SAP</span>
+                <span class="tech-tag">Tableau</span>
+                <span class="tech-tag">Looker Studio</span>
+            </div>
+            <div class="hero__ctas">
+                <a class="btn-primary" href="projects.html">Ver Projetos</a>
+                <a class="btn-outline" href="about.html">Sobre mim</a>
+            </div>
+            <div class="social-links">
+                <a class="social-link" href="https://github.com/RubensCosta22" target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <img src="./assets/github.png" alt="GitHub">
                 </a>
-                <!-- Link para o LinkedIn -->
-                <a class="apresentacao__links__navegacao" href="https://www.linkedin.com/in/rubens-henrique-ribeiro-da-costa-467873102/" target="_blank" rel="noopener noreferrer">
-                    <img src="./assets/linkedin.png" alt="Ícone do LinkedIn">
-                    Linkedin
+                <a class="social-link" href="https://www.linkedin.com/in/rubens-hcosta" target="_blank" rel="noopener noreferrer" title="LinkedIn">
+                    <img src="./assets/linkedin.png" alt="LinkedIn">
                 </a>
-                <!-- Link para o Instagram -->
-                <a class="apresentacao__links__navegacao" href="https://www.instagram.com/rubens19962/" target="_blank" rel="noopener noreferrer">
-                    <img src="./assets/instagram.png" alt="Ícone do Instagram">
-                    Instagram
+                <a class="social-link" href="https://www.instagram.com/rubens19962/" target="_blank" rel="noopener noreferrer" title="Instagram">
+                    <img src="./assets/instagram.png" alt="Instagram">
                 </a>
             </div>
         </section>
-        <!-- Imagem de perfil -->
-        <img class="apresentacao__imagem" src="./assets/img.jpg" alt="Foto de perfil de Rubens">
+        <div class="hero__visual">
+            <div class="perfil-card">
+                <div class="perfil-card__img-wrapper">
+                    <img src="./assets/img.jpg" alt="Foto de perfil de Rubens Costa">
+                    <div class="perfil-card__info">
+                        <div class="perfil-card__nome">Rubens Costa</div>
+                        <div class="perfil-card__cargo">// Data Analyst · TGG</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <!-- Rodapé da página -->
     <footer class="rodape">
-        <p>Desenvolvido por Rubens Costa</p>
+        <span class="rodape__mono">rubens.costa</span>
+        <span>© 2025 — Guarujá, SP</span>
     </footer>
 </body>
-
 </html>
